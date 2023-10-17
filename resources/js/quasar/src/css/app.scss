@@ -1,0 +1,157 @@
+@import 'content.scss';
+
+body {
+	color: $text_color;
+}
+
+.flex {
+	&-shrink {
+		flex-shrink: 0;
+	}
+}
+
+.text {
+	&-no {
+		&-underline {
+			text-decoration: none !important;
+		}
+	}
+}
+
+.top {
+	z-index: 1;
+}
+
+.q {
+	&-gap {
+		@each $space, $modifier in $spaces {
+			&-#{$space} {
+				gap: map-get($modifier, 'x');
+			}
+
+			&-x-#{$space} {
+				column-gap: map-get($modifier, 'y');
+			}
+
+			&-y-#{$space} {
+				row-gap: map-get($modifier, 'y');
+			}
+		}
+	}
+}
+
+.rounded {
+	border-radius: 10px;
+
+	&-borders {
+		border-radius: $borderRadius;
+	}
+
+	&-0 {
+		border-radius: 0 !important;
+	}
+
+	&-4 {
+		border-radius: 4px !important;
+	}
+
+	&-6 {
+		border-radius: 6px !important;
+	}
+
+	&-8 {
+		border-radius: 8px !important;
+	}
+
+	&-10 {
+		border-radius: 10px !important;
+	}
+
+	&-12 {
+		border-radius: 12px !important;
+	}
+
+	&-16 {
+		border-radius: 16px !important;
+	}
+
+	&-28 {
+		border-radius: 28px !important;
+	}
+
+	&-32 {
+		border-radius: 32px !important;
+	}
+}
+
+.bordered {
+	border: 1px solid rgba(black, 0.24);
+
+	&-none {
+		border: none !important;
+	}
+
+	&-light {
+		border-color: rgba($secondary, 0.3) !important;
+	}
+
+	&-lighten {
+		border-color: rgba($secondary, 0.2) !important;
+	}
+
+	&-secondary {
+		border-color: $secondary !important;
+	}
+
+	&-dashed {
+		border-style: dashed;
+	}
+
+	&-thick {
+		border-width: 2px;
+	}
+
+	&-top {
+		border-top: 1px solid;
+	}
+
+	&-bottom {
+		border-bottom: 1px solid;
+	}
+
+	&-left {
+		border-left: 1px solid;
+	}
+
+	&-right {
+		border-right: 1px solid;
+	}
+
+	&-collapse {
+		border-collapse: collapse;
+	}
+}
+
+.column {
+	&-reverse {
+		display: flex;
+		flex-direction: column-reverse;
+	}
+}
+
+.row {
+	&-reverse {
+		display: flex;
+		flex-direction: row-reverse;
+	}
+}
+
+.overlay {
+	&-top {
+		z-index: 1;
+	}
+
+	&-color {
+		background-color: rgba(black, 0.5);
+	}
+}

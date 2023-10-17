@@ -1,0 +1,25 @@
+.content {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+
+	padding: 0px map-get($space-md, 'x');
+
+	&__wrapper {
+		width: 100%;
+		max-width: 1400px;
+		margin: 0px auto;
+
+		&--dense {
+			max-width: 800px;
+		}
+
+		&--padding {
+			&-y {
+				padding-top: map-get($space-lg, 'y');
+				padding-bottom: map-get($space-lg, 'y');
+			}
+		}
+	}
+
+}

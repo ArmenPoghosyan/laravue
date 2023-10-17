@@ -1,0 +1,329 @@
+{
+	"globals": {
+		"languages": { "en": "English", "ru": "Russian" },
+		"new": "New",
+		"create": "Create",
+		"sync": "Sync",
+		"cancel": "Cancel",
+		"edit": "Edit",
+		"save": "Save",
+		"add": "Add",
+		"confirm": "Confirm",
+		"please_note": "Please note",
+		"user_fields": {
+			"first_name": "Name",
+			"last_name": "Surname",
+			"age": "Age",
+			"phone": "Phone",
+			"email": "Email",
+			"registration_date": "Registration date",
+			"type": "Type",
+			"password": "Password",
+			"password_confirm": "Password confirmation",
+			"nick_name": "Nick name",
+			"birth_date": "Birth date"
+		},
+		"pagination": {
+			"records": "Records per page:",
+			"range": "{start} - {end} of {total}"
+		},
+		"all": "All",
+		"user_types": {
+			"owner": "Owner",
+			"manager": "Manager",
+			"admin": "Admin"
+		},
+		"calendar": {
+			"days": {
+				"monday": "Monday",
+				"tuesday": "Tuesday",
+				"wednesday": "Wednesday",
+				"thursday": "Thursday",
+				"friday": "Friday",
+				"saturday": "Saturday",
+				"sunday": "Sunday"
+			},
+			"days_short": {
+				"monday": "Mon",
+				"tuesday": "Tue",
+				"wednesday": "Wed",
+				"thursday": "Thu",
+				"friday": "Fri",
+				"saturday": "Sat",
+				"sunday": "Sun"
+			},
+			"months": {
+				"january": "January",
+				"february": "February",
+				"march": "March",
+				"april": "April",
+				"may": "May",
+				"june": "June",
+				"july": "July",
+				"august": "August",
+				"september": "September",
+				"october": "October",
+				"november": "November",
+				"december": "December"
+			},
+			"months_short": {
+				"january": "Jan",
+				"february": "Feb",
+				"march": "Mar",
+				"april": "Apr",
+				"june": "Jun",
+				"july": "Jul",
+				"august": "Aug",
+				"september": "Sep",
+				"october": "Oct",
+				"november": "Nov",
+				"december": "Dec",
+				"may": "May"
+			},
+			"plural_day": "Days"
+		},
+		"apply": "Apply",
+		"today": "Today",
+		"filters": "Filters",
+		"errors": {
+			"unknown": "Something went wrong.",
+			"default_translation_not_filled": "The translation for {language} must be filled.",
+			"not_allowed": "You are not allow to perform this action",
+			"invalid_file_type": "Invalid file type",
+			"file_too_large": "File to large",
+			"file_not_image": "File is not an image"
+		},
+		"yes": "Yes",
+		"no": "No",
+		"delete": "Delete",
+		"multimedia": "Media",
+		"multimedia_types": {
+			"photo": "Photo",
+			"video": "Video",
+			"document": "Document",
+			"link": "Link"
+		},
+		"deletion_notice": "Are you sure you want to delete this?",
+		"nothing_here": "There's noting here",
+		"deleted": "Successfully deleted",
+		"user": "User",
+		"saved": "Saved",
+		"back": "Back",
+		"continue": "Continue",
+		"change": "Change",
+		"in_process": "In process",
+		"complete": "Complete",
+		"date": "Date",
+		"value": "Value",
+		"task_status": {
+			"start": "Start",
+			"pause": "Pause",
+			"resume": "Resume",
+			"complete": "Complete"
+		},
+		"search": "Search",
+		"close": "Close",
+		"details": "Details",
+		"hours": "Hours",
+		"hour_fields": {
+			"start_at": "Start at",
+			"end_at": "End at",
+			"duration": "Duration"
+		},
+		"time_formats": {
+			"seconds": "seconds",
+			"minutes": "minute",
+			"hours": "Hours",
+			"days": "days",
+			"years": "years"
+		},
+		"minutes": "Minutes",
+		"status": "Status",
+		"added": "Added"
+	},
+	"pages": {
+		"localizations": {
+			"title": "Localizations",
+			"path": "Path",
+			"key": "Key",
+			"value": "Value",
+			"label": "Label",
+			"node_edit": "You are attempting to modify a parent node, which could potentially disrupt the correct functioning of translations.",
+			"synced": "Localizations are synced!",
+			"sync_failed": "Localizations sync was failed.",
+			"delete": "Are you sure you want to delete this localization?",
+			"delete_node": "You are trying to delete a node, which will delete all contained items, Are you sure?",
+			"type": "Type",
+			"node": "Node"
+		},
+		"auth": {
+			"login": {
+				"remember": "Remember me",
+				"forgot_password": "Forgot password?",
+				"login": "Login"
+			},
+			"forgot_pass": {
+				"title": "Forgot password?",
+				"subtitle": "Write your email and we will send you password recovery instructions",
+				"send": "Send",
+				"sent_notice": "We have sent you an email with instructions on how to restore the password."
+			},
+			"reset_pass": {
+				"title": "Reset password",
+				"subtitle": "Write your new password.",
+				"reset": "Reset",
+				"success": "Your password was reset!"
+			}
+		},
+		"profile": { "title": "Profile", "change_password": "Change password" },
+		"analytics": { "title": "Analytics" },
+		"orders": { "title": "Orders" },
+		"pushes": {
+			"title": "Push notifications",
+			"send_title": "Send",
+			"message": "Message"
+		},
+		"money": { "title": "Money" }
+	},
+	"emails": {
+		"reset_password": {
+			"subject": "Reset password",
+			"body": "We have received a password reset request associated with this email address. If this was you and you would like to reset your password, please visit the following link:",
+			"action": "Reset password",
+			"outro": "<div>If you have not submitted a password reset request, please ignore this message. Your account will remain secure.</div><div><br></div><div>If you have any questions or need further assistance, do not hesitate to contact our support team.</div>"
+		},
+		"globals": {
+			"button_fallback_text": "If you are having trouble clicking the \"{action_text}\" button, please copy and paste the URL below into your web browser: <a href=\"{action_url}\" target=\"_blank\" class=\"break-all\">{display_url}",
+			"salutation": "Best regards,<br/>{app_name}",
+			"greeting": "Hello {user_name},"
+		}
+	},
+	"validation": {
+		"between": {
+			"array": "The :attribute must have between :min and :max items.",
+			"file": "The :attribute must be between :min and :max kilobytes.",
+			"numeric": "The :attribute must be between :min and :max.",
+			"string": "The :attribute must be between :min and :max characters."
+		},
+		"gt": {
+			"array": "The :attribute must have more than :value items.",
+			"file": "The :attribute must be greater than :value kilobytes.",
+			"numeric": "The :attribute must be greater than :value.",
+			"string": "The :attribute must be greater than :value characters."
+		},
+		"gte": {
+			"array": "The :attribute must have :value items or more.",
+			"file": "The :attribute must be greater than or equal to :value kilobytes.",
+			"numeric": "The :attribute must be greater than or equal to :value.",
+			"string": "The :attribute must be greater than or equal to :value characters."
+		},
+		"lt": {
+			"array": "The :attribute must have less than :value items.",
+			"file": "The :attribute must be less than :value kilobytes.",
+			"numeric": "The :attribute must be less than :value.",
+			"string": "The :attribute must be less than :value characters."
+		},
+		"lte": {
+			"array": "The :attribute must not have more than :value items.",
+			"file": "The :attribute must be less than or equal to :value kilobytes.",
+			"numeric": "The :attribute must be less than or equal to :value.",
+			"string": "The :attribute must be less than or equal to :value characters."
+		},
+		"max": {
+			"array": "The :attribute must not have more than :max items.",
+			"file": "The :attribute must not be greater than :max kilobytes.",
+			"numeric": "The :attribute must not be greater than :max.",
+			"string": "The :attribute must not be greater than :max characters."
+		},
+		"min": {
+			"array": "The :attribute must have at least :min items.",
+			"file": "The :attribute must be at least :min kilobytes.",
+			"numeric": "The :attribute must be at least :min.",
+			"string": "The :attribute must be at least :min characters."
+		},
+		"password": {
+			"letters": "The :attribute must contain at least one letter.",
+			"mixed": "The :attribute must contain at least one uppercase and one lowercase letter.",
+			"numbers": "The :attribute must contain at least one number.",
+			"symbols": "The :attribute must contain at least one symbol.",
+			"uncompromised": "The given :attribute has appeared in a data leak. Please choose a different :attribute.",
+			"invalid": "Invalid password",
+			"incorrect": "The password is incorrect."
+		},
+		"size": {
+			"array": "The :attribute must contain :size items.",
+			"file": "The :attribute must be :size kilobytes.",
+			"numeric": "The :attribute must be :size.",
+			"string": "The :attribute must be :size characters."
+		},
+		"accepted": "The :attribute must be accepted.",
+		"accepted_if": "The :attribute must be accepted when :other is :value.",
+		"active_url": "The :attribute is not a valid URL.",
+		"after": "The :attribute must be a date after :date.",
+		"after_or_equal": "The :attribute must be a date after or equal to :date.",
+		"alpha": "The :attribute must only contain letters.",
+		"alpha_dash": "The :attribute must only contain letters, numbers, dashes and underscores.",
+		"alpha_num": "The :attribute must only contain letters and numbers.",
+		"array": "The :attribute must be an array.",
+		"before": "The :attribute must be a date before :date.",
+		"before_or_equal": "The :attribute must be a date before or equal to :date.",
+		"boolean": "The :attribute field must be true or false.",
+		"confirmed": "The :attribute confirmation does not match.",
+		"current_password": "The password is incorrect.",
+		"date": "The :attribute is not a valid date.",
+		"date_equals": "The :attribute must be a date equal to :date.",
+		"date_format": "The :attribute does not match the format :format.",
+		"declined": "The :attribute must be declined.",
+		"declined_if": "The :attribute must be declined when :other is :value.",
+		"different": "The :attribute and :other must be different.",
+		"digits": "The :attribute must be :digits digits.",
+		"digits_between": "The :attribute must be between :min and :max digits.",
+		"dimensions": "The :attribute has invalid image dimensions.",
+		"distinct": "The :attribute field has a duplicate value.",
+		"email": "The :attribute must be a valid email address.",
+		"ends_with": "The :attribute must end with one of the following: :values.",
+		"enum": "The selected :attribute is invalid.",
+		"exists": "The selected :attribute is invalid.",
+		"file": "The :attribute must be a file.",
+		"filled": "The :attribute field must have a value.",
+		"image": "The :attribute must be an image.",
+		"in": "The selected :attribute is invalid.",
+		"in_array": "The :attribute field does not exist in :other.",
+		"integer": "The :attribute must be an integer.",
+		"ip": "The :attribute must be a valid IP address.",
+		"ipv4": "The :attribute must be a valid IPv4 address.",
+		"ipv6": "The :attribute must be a valid IPv6 address.",
+		"json": "The :attribute must be a valid JSON string.",
+		"mac_address": "The :attribute must be a valid MAC address.",
+		"mimes": "The :attribute must be a file of type: :values.",
+		"mimetypes": "The :attribute must be a file of type: :values.",
+		"multiple_of": "The :attribute must be a multiple of :value.",
+		"not_in": "The selected :attribute is invalid.",
+		"not_regex": "The :attribute format is invalid.",
+		"numeric": "The :attribute must be a number.",
+		"present": "The :attribute field must be present.",
+		"prohibited": "The :attribute field is prohibited.",
+		"prohibited_if": "The :attribute field is prohibited when :other is :value.",
+		"prohibited_unless": "The :attribute field is prohibited unless :other is in :values.",
+		"prohibits": "The :attribute field prohibits :other from being present.",
+		"regex": "The :attribute format is invalid.",
+		"required": "The :attribute field is required.",
+		"required_array_keys": "The :attribute field must contain entries for: :values.",
+		"required_if": "The :attribute field is required when :other is :value.",
+		"required_unless": "The :attribute field is required unless :other is in :values.",
+		"required_with": "The :attribute field is required when :values is present.",
+		"required_with_all": "The :attribute field is required when :values are present.",
+		"required_without": "The :attribute field is required when :values is not present.",
+		"required_without_all": "The :attribute field is required when none of :values are present.",
+		"same": "The :attribute and :other must match.",
+		"starts_with": "The :attribute must start with one of the following: :values.",
+		"doesnt_start_with": "The :attribute may not start with one of the following: :values.",
+		"string": "The :attribute must be a string.",
+		"timezone": "The :attribute must be a valid timezone.",
+		"unique": "The :attribute has already been taken.",
+		"uploaded": "The :attribute failed to upload.",
+		"url": "The :attribute must be a valid URL.",
+		"uuid": "The :attribute must be a valid UUID.",
+		"attributes": { "password_confirm": "Password confirmation" }
+	}
+}

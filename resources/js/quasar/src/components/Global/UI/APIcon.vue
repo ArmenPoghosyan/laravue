@@ -1,0 +1,3 @@
+<template>
+	<q-icon />
+</template>

@@ -1,0 +1,1 @@
+import{_ as o,bs as s,r as n,c as t,w as r,o as p,bg as c,aT as _}from"./index.02061857.js";const l=s({name:"IndexPage"});function f(e,d,i,m,u,g){const a=n("ap-page");return p(),t(a,{class:"flex flex-center"},{default:r(()=>[c("pre",null,_(e.$user),1)]),_:1})}var $=o(l,[["render",f]]);export{$ as default};

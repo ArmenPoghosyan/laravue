@@ -1,0 +1,133 @@
+{
+	"folders": [
+		{
+			"name": "Laravel",
+			"path": "."
+		},
+		{
+			"name": "Quasar",
+			"path": "./resources/js/quasar"
+		}
+	],
+	"settings": {
+		"VsCodeTaskButtons.showCounter": false,
+		"VsCodeTaskButtons.tasks": [
+			{
+				"label": "$(mail) SMTP",
+				"task": "smtp",
+				"tooltip": "Start SMTP server"
+			},
+			{
+				"label": "$(trash) Clean",
+				"task": "clean",
+				"tooltip": "Clean all"
+			},
+			{
+				"label": "$(settings-gear) Build",
+				"task": "build",
+				"tooltip": "Build quasar project"
+			},
+			{
+				"label": "$(vm-running) Run",
+				"task": "run",
+				"tooltip": "Run Development server"
+			}
+		],
+
+		"editor.renderWhitespace": "all",
+		"editor.mouseWheelZoom": true,
+		"cSpell.words": [
+			"Doesnt",
+			"endregion",
+			"IFNULL",
+			"itemable",
+			"parentable",
+			"Sklad",
+			"TIMEDIFF",
+			"TIMESTAMPDIFF"
+		],
+		"zenMode.centerLayout": true,
+		"zenMode.hideLineNumbers": false,
+		"zenMode.hideActivityBar": false,
+		"zenMode.hideTabs": false,
+	},
+	"tasks": {
+		"version": "2.0.0",
+
+		"tasks": [
+			{
+				"label": "SMTP",
+				"detail": "Start SMTP server",
+				"type": "shell",
+				"command": "smtp4dev",
+				"isBackground": true,
+				"presentation": {
+					"reveal": "always",
+					"panel": "new"
+				},
+				"problemMatcher": []
+			},
+			{
+				"label": "Clean",
+				"detail": "Clean all",
+				"type": "shell",
+				"command": "./scripts/clean.sh",
+				"isBackground": true,
+				"presentation": {
+					"reveal": "silent",
+					"panel": "shared"
+				},
+				"problemMatcher": []
+			},
+			{
+				"label": "Run",
+				"detail": "Run development server",
+				"type": "shell",
+				"command": "./scripts/run.sh",
+				"isBackground": true,
+				"presentation": {
+					"reveal": "silent",
+					"panel": "shared"
+				},
+				"problemMatcher": []
+			},
+			{
+				"label": "Build",
+				"detail": "Build Quasar project",
+				"type": "shell",
+				"command": "./scripts/build.sh",
+				"presentation": {
+					"reveal": "always",
+					"panel": "shared"
+				},
+				"group": {
+					"kind": "build",
+					"isDefault": true
+				},
+				"problemMatcher": []
+			}
+		]
+	},
+	"extensions": {
+		"recommendations": [
+			"spencerwmiles.vscode-task-buttons",
+			"esbenp.prettier-vscode",
+			"formulahendry.auto-rename-tag",
+			"formulahendry.auto-close-tag",
+			"editorconfig.editorconfig",
+			"dbaeumer.vscode-eslint",
+			"eamodio.gitlens",
+			"bmewburn.vscode-intelephense-client",
+			"porifa.laravel-intelephense",
+			"streetsidesoftware.code-spell-checker",
+			"aaron-bond.better-comments"
+		],
+
+		"unwantedRecommendations": [
+			"octref.vetur",
+			"hookyqr.beautify",
+			"dbaeumer.jshint",
+			"ms-vscode.vscode-typescript-tslint-plugin"
+		]
+	}
+}

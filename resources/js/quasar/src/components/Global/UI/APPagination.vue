@@ -1,0 +1,3 @@
+<template>
+	<q-pagination />
+</template>

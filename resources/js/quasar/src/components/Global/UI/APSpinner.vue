@@ -1,0 +1,3 @@
+<template>
+	<q-spinner />
+</template>

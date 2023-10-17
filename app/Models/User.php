@@ -2,44 +2,140 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Notifications\ResetPasswordNotification;
+use App\Traits\{HasAchievements, HasCoins, HasCompany, HasEvents, HasLocalScopes, HasMoney, HasNotifications, HasOrders, HasSettings, HasShopDiscounts};
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\{MustVerifyEmail};
+use Illuminate\Database\Eloquent\Relations\{HasMany, HasOne, MorphMany};
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
+use Carbon\Carbon;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable;
+	use
+		SoftDeletes,
+		HasApiTokens,
+		CanResetPassword,
+		//
+		HasFactory,
+		HasLocalScopes,
+		HasSettings,
+		HasNotifications
+		//
+	;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+	const TYPE_USER		= 'user';
+	const TYPE_MANAGER	= 'manager';
+	const TYPE_ADMIN	= 'admin';
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+	protected $fillable = [
+		'first_name',
+		'last_name',
+		'type',
+		'email',
+		'phone',
+		'avatar',
+		'birth_date',
+		'password',
+		'language',
+		'email_verified_at'
+	];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
-    ];
+	protected $hidden = [
+		'password',
+		'remember_token',
+		'deleted_at',
+		'updated_at',
+		'email_verified_at'
+	];
+
+	protected $casts = [
+		'birth_date'			=> 'string',
+		'email_verified_at'		=> 'datetime',
+		'password'				=> 'hashed',
+	];
+
+	protected $appends = [
+		'age',
+		'full_name',
+	];
+
+	/** @return HasMany  */
+	public function devices()
+	{
+		return $this->hasMany(UserDevice::class);
+	}
+
+	/**
+	 * Get the user's full name
+	 *
+	 * @return string
+	 */
+	public function getFullNameAttribute()
+	{
+		return $this->first_name . ' ' . $this->last_name;
+	}
+
+	/**
+	 * Get the user's age
+	 *
+	 * @return int
+	 */
+	public function getAgeAttribute()
+	{
+		if ($this->birth_date) {
+			return Carbon::parse($this->birth_date)->age ?? 0;
+		}
+
+		return 0;
+	}
+
+	/**
+	 * Get the user's language
+	 *
+	 * @param mixed $value
+	 * @return mixed
+	 */
+	public function getLanguageAttribute($value)
+	{
+		return $value ?? config('app.locale');
+	}
+
+	/**
+	 * Hash the password before saving
+	 *
+	 * @param mixed $value
+	 * @return void
+	 */
+	public function setPasswordAttribute($value)
+	{
+		$this->attributes['password'] = Hash::make($value);
+	}
+
+	/**
+	 * Send the password reset notification
+	 *
+	 * @param string $token
+	 * @return void
+	 */
+	public function sendPasswordResetNotification($token)
+	{
+		$this->notify(new ResetPasswordNotification($token));
+	}
+
+	/**
+	 * Check if the password is correct
+	 *
+	 * @param mixed $password
+	 * @return bool
+	 */
+	public function check_password($password)
+	{
+		return Hash::check($password, $this->password);
+	}
 }
