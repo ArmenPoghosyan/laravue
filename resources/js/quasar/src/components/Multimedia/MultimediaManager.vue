@@ -4,19 +4,41 @@
 			<span class="text-h6 q-mr-auto">{{ title }}</span>
 
 			<ap-button unelevated color="primary" size="10px" :label="$t('globals.add')">
-				<ap-menu auto-close cover anchor="top right">
+				<ap-menu v-if="limit == 0 || state.list.length < limit" auto-close cover anchor="top right">
 					<ap-list separator>
-						<ap-item clickable v-for="(type, index) in lists.multimedia_types.value" :key="index" @click="type_selected(type.value)">
+						<ap-item v-if="photo" clickable @click="type_selected('photo')">
 							<ap-item-section icon>
-								<ap-icon :name="type.icon" size="24px" />
+								<ap-icon name="sym_o_image" size="24px" />
 							</ap-item-section>
 
 							<ap-item-section>
-								<ap-item-label>{{ type.label }}</ap-item-label>
+								<ap-item-label>{{ $t('globals.multimedia_types.photo') }}</ap-item-label>
+							</ap-item-section>
+						</ap-item>
+
+						<ap-item v-if="video" clickable @click="type_selected('video')">
+							<ap-item-section icon>
+								<ap-icon name="sym_o_smart_display" size="24px" />
+							</ap-item-section>
+
+							<ap-item-section>
+								<ap-item-label>{{ $t('globals.multimedia_types.video') }}</ap-item-label>
+							</ap-item-section>
+						</ap-item>
+
+						<ap-item v-if="link" clickable @click="type_selected('link')">
+							<ap-item-section icon>
+								<ap-icon name="sym_o_youtube_activity" size="24px" />
+							</ap-item-section>
+
+							<ap-item-section>
+								<ap-item-label>Youtube</ap-item-label>
 							</ap-item-section>
 						</ap-item>
 					</ap-list>
 				</ap-menu>
+
+				<ap-tooltip v-else :offset="[0, 28]" anchor="top right" self="top middle" class="text-white bg-negative text-no-wrap">{{ $t('globals.errors.photo_limit_reached') }}</ap-tooltip>
 			</ap-button>
 		</ap-card-section>
 
@@ -42,17 +64,17 @@
 
 								<ap-item-section>
 									<div class="row items-center q-gap-sm">
-										<div class="rounded-4 bordered bordered-light bg-primary flex flex-center relative-position" style="width: 40px; height: 40px">
+										<div class="rounded-4 bordered bordered-light flex flex-center relative-position" style="width: 40px; height: 40px">
 											<img
-												v-if="element.thumbnail || element.type == 'photo'"
+												v-if="(element.thumbnail || element.type == 'photo') && element.path"
 												:src="element.thumbnail || (element.type == 'photo' && media(element.path, 's'))"
 												class="fit rounded-4 cursor-pointer"
 												style="object-fit: cover"
 												@click.prevent.stop="open_media_popup(media(element.path))"
 											/>
 
-											<ap-icon v-else-if="element.type == 'video'" name="sym_o_smart_display" size="24px" class="text-white" />
-											<ap-icon v-else-if="element.type == 'link'" name="sym_o_link" size="24px" class="text-white" />
+											<ap-icon v-else-if="element.type == 'video'" name="sym_o_smart_display" size="24px" class="text-primary" />
+											<ap-icon v-else-if="element.type == 'link'" name="sym_o_youtube_activity" size="24px" class="text-primary" />
 
 											<div v-if="!element?.id" class="absolute-full overlay-color overlay-top flex flex-center">
 												<ap-circular-progress :indeterminate="element?.percent == 100 && element?.id == null" size="20px" track-color="black" color="white" :value="element?.percent" />
@@ -60,7 +82,10 @@
 											</div>
 										</div>
 
-										<span class="text-body2">{{ $t(`globals.multimedia_types.${element.type}`) }}</span>
+										<span class="text-body2">
+											<template v-if="element.type == 'link'">Youtube</template>
+											<template v-else>{{ $t(`globals.multimedia_types.${element.type}`) }}</template>
+										</span>
 
 										<template v-if="element?.id">
 											<a class="text-no-underline" target="_blank" :href="element.type == 'link' ? element.path : media(element.path)">
@@ -133,6 +158,26 @@ export default {
 			type: String,
 			default: core.locale.t('globals.multimedia'),
 		},
+
+		limit: {
+			type: Number,
+			default: 0,
+		},
+
+		photo: {
+			type: Boolean,
+			default: false,
+		},
+
+		video: {
+			type: Boolean,
+			default: false,
+		},
+
+		link: {
+			type: Boolean,
+			default: false,
+		},
 	},
 
 	setup(props, { emit }) {
@@ -158,8 +203,7 @@ export default {
 								model: '',
 								type: 'url',
 								isValid: (val) => {
-									let regex =
-										/^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z0-9\u00a1-\uffff][a-z0-9\u00a1-\uffff_-]{0,62})?[a-z0-9\u00a1-\uffff]\.)+(?:[a-z\u00a1-\uffff]{2,}\.?))(?::\d{2,5})?(?:[/?#]\S*)?$/i;
+									let regex = /^(http(s)??\:\/\/)?(www\.)?((youtube\.com\/watch\?v=)|(youtu.be\/))([a-zA-Z0-9\-_])+/;
 
 									return regex.test(val);
 								},
@@ -236,6 +280,15 @@ export default {
 				return;
 			}
 
+			if (type == 'photo' && ['jpg', 'jpeg', 'png', 'bmp'].indexOf(file.name.split('.').pop().toLowerCase()) == -1) {
+				core.$q.notify({
+					type: 'negative',
+					message: core.locale.t('globals.errors.invalid_file_type'),
+				});
+
+				return;
+			}
+
 			// Check if the file is too large
 			if (file.size > MAX_FILE_SIZE * 1024 * 1024) {
 				core.$q.notify({
@@ -296,15 +349,15 @@ export default {
 				media_instance.path = response.multimedia.path;
 				update_state();
 				emit_loading();
-
-				// emit_state();
-
 				//
 			} else {
-				// core.$q.notify({
-				// 	type: 'negative',
-				// 	message: core.locale.t('globals.errors.unknown'),
-				// });
+				state.value.list.splice(index, 1);
+
+				let message = response?.message || response?.errors?.file?.[0] || core.locale.t('globals.errors.unknown');
+				core.$q.notify({
+					type: 'negative',
+					message,
+				});
 			}
 		}
 

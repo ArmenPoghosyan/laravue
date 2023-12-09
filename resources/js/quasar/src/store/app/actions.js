@@ -17,7 +17,7 @@ export async function init({ commit, dispatch }) {
 }
 
 export async function init_cookie({ commit }) {
-	await api.get(`sanctum/csrf-cookie`);
+	await api.get(`${API}/sanctum/csrf-cookie`);
 }
 
 export async function set_locale({ commit }, locale) {

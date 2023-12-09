@@ -99,6 +99,10 @@ body {
 		border-color: rgba($secondary, 0.2) !important;
 	}
 
+	&-primary {
+		border-color: $primary !important;
+	}
+
 	&-secondary {
 		border-color: $secondary !important;
 	}
@@ -129,6 +133,10 @@ body {
 
 	&-collapse {
 		border-collapse: collapse;
+	}
+
+	&-round {
+		border-radius: 50%;
 	}
 }
 

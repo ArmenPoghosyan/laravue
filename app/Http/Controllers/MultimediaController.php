@@ -23,9 +23,19 @@ class MultimediaController extends Controller
 			case Multimedia::TYPE_PHOTO:
 			case Multimedia::TYPE_VIDEO:
 			case Multimedia::TYPE_DOCUMENT:
-				$request->validate([
-					'file' => 'required|file|max:20480',
-				]);
+				$rules = [
+					'file'	=> ['required', 'file', 'max:20480'],
+				];
+
+				if ($request->type === Multimedia::TYPE_PHOTO) {
+					$max_width	= config('image.max_width', 2000);
+					$max_height	= config('image.max_height', 2000);
+
+					$rules['file'][] = 'mimes:jpg,png,bmp,gif';
+					$rules['file'][] = "dimensions:max_width={$max_width},max_height={$max_height}";
+				}
+
+				$request->validate($rules, [], ___('globals.multimedia_types'));
 
 				$multimedia = Multimedia::handle_file($request->file('file'), $request->type);
 

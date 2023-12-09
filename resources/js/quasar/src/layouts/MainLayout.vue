@@ -1,20 +1,26 @@
 <template>
 	<ap-layout view="lHh Lpr lFf">
-		<ap-header elevated class="row items-center q-gap-sm">
+		<ap-header elevated class="row items-center q-gap-sm bg-accent">
 			<ap-button flat round icon="menu" aria-label="Menu" @click="toggleDrawer" />
 
 			<ap-link class="text-h6 text-white text-no-underline">{{ config.app.name }}</ap-link>
 
 			<ap-button round flat class="q-ml-auto">
-				<ap-icon name="sym_o_account_circle" />
+				<ap-avatar bordered class="flex-shrink bg-white overflow-hidden" size="36px">
+					<ap-img v-if="$user.avatar" class="fit" fit="contain" :src="media($user.avatar, 's')" />
+					<ap-icon v-else name="sym_o_account_circle" class="text-grey-6" size="24px" />
+				</ap-avatar>
 
 				<ap-menu>
 					<ap-card :rounded="false">
 						<ap-card-section class="row no-wrap items-center q-gap-sm">
-							<ap-icon name="sym_o_account_circle" size="32px" />
+							<ap-avatar bordered class="flex-shrink flex flex-center bg-white" size="40px">
+								<ap-img v-if="$user.avatar" class="fit" fit="contain" :src="media($user.avatar, 's')" />
+								<ap-icon v-else name="sym_o_person" class="text-grey-6" size="24px" />
+							</ap-avatar>
 
 							<div class="column">
-								<span class="text-caption2 text-no-wrap">{{ $user.full_name }}</span>
+								<span class="text-caption text-no-wrap">{{ $user.full_name }}</span>
 							</div>
 						</ap-card-section>
 
@@ -22,6 +28,16 @@
 
 						<ap-card-section no-padding>
 							<ap-list separator>
+								<ap-item clickable exact :to="{ name: 'profile.index' }">
+									<ap-item-section icon>
+										<ap-icon name="person" size="24px" />
+									</ap-item-section>
+
+									<ap-item-section>
+										<ap-item-label>{{ $t('pages.profile.title') }}</ap-item-label>
+									</ap-item-section>
+								</ap-item>
+
 								<ap-item clickable @click="logout">
 									<ap-item-section icon>
 										<ap-icon name="logout" size="24px" />
@@ -89,14 +105,20 @@
 		<ap-page-container>
 			<router-view />
 		</ap-page-container>
+
+		<password-popup />
+		<media-popup />
 	</ap-layout>
 </template>
 
 <script>
+import { PasswordPopup, MediaPopup } from 'src/components/Popups';
 import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
 	name: 'MainLayout',
+
+	components: { PasswordPopup, MediaPopup },
 
 	setup() {
 		const drawer = ref(false);

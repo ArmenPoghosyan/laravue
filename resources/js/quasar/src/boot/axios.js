@@ -54,6 +54,19 @@ async function sendRequest(url, params, method = 'GET', isForm = false, config =
 			statusCode: 404,
 		};
 	} catch (error) {
+		// * If you need to force logout when unauthorized
+		// if (error.response.status === 401) {
+		// 	setTimeout(() => {
+		// 		if (!core.router.currentRoute.value.meta?.is_auth && !core.router.currentRoute.value.meta?.is_public) {
+		// 			let route = core.router.resolve({ name: 'auth.login' });
+		// 			let path = route?.path || '/login';
+		// 			if (location.pathname != path) {
+		// 				location.pathname = path;
+		// 			}
+		// 		}
+		// 	}, 1000);
+		// }
+
 		return {
 			status: false,
 			...error.response?.data,

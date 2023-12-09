@@ -1,6 +1,6 @@
 <template>
 	<ap-card flat>
-		<ap-card-section class="column items-center q-gap-sm">
+		<ap-card-section class="row justify-center q-gap-sm">
 			<span class="text-h5">{{ $t('pages.auth.reset_pass.title') }}</span>
 			<span class="text-subtitle text-center">{{ $t('pages.auth.reset_pass.subtitle') }}</span>
 		</ap-card-section>

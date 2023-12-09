@@ -1,5 +1,5 @@
 <template>
-	<q-select outlined dense :error="validation.error(validate)" :error-message="validation.errorMessage(validate)">
+	<q-select outlined dense behavior="menu" :error="validation.error(validate)" :error-message="validation.errorMessage(validate)">
 		<slot />
 
 		<template v-slot:option="scope" v-if="availableSlots.includes('option')">

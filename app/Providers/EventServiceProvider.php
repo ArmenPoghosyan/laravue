@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
+use App\Listeners\InvalidFCMTokenListener;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
+use Illuminate\Notifications\Events\NotificationFailed;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -12,7 +13,11 @@ class EventServiceProvider extends ServiceProvider
 	 *
 	 * @var array<class-string, array<int, class-string>>
 	 */
-	protected $listen = [];
+	protected $listen = [
+		NotificationFailed::class => [
+			InvalidFCMTokenListener::class,
+		],
+	];
 
 	/**
 	 * Register any events for your application.

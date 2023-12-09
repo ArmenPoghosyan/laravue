@@ -10,7 +10,6 @@
 
 const { configure } = require('quasar/wrappers');
 const path = require('path');
-const { config } = require('process');
 
 const is_production = process.env.NODE_ENV === 'production';
 

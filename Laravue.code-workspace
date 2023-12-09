@@ -48,8 +48,7 @@
 		],
 		"zenMode.centerLayout": true,
 		"zenMode.hideLineNumbers": false,
-		"zenMode.hideActivityBar": false,
-		"zenMode.hideTabs": false,
+		"zenMode.hideActivityBar": false
 	},
 	"tasks": {
 		"version": "2.0.0",

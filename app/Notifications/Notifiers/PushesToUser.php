@@ -30,15 +30,21 @@ trait PushesToUser
 				AndroidConfig::create()
 					->setFcmOptions(AndroidFcmOptions::create()->setAnalyticsLabel('analytics'))
 					->setNotification(
-						AndroidNotification::create()
+						AndroidNotification::create()->setColor('#24836F')->setSound('default')
 					)
 				//
 			)
 			->setApns(
 				ApnsConfig::create()
+					->setPayload([
+						'aps' => [
+							'sound' => 'default',
+						],
+					])
 					->setFcmOptions(ApnsFcmOptions::create()->setAnalyticsLabel('analytics_ios'))
 				//
 			)
+			->setData($data)
 			//
 		;
 	}

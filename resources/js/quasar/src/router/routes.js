@@ -11,6 +11,11 @@ const routes = [
 				name: 'home',
 				component: () => import('pages/HomePage.vue'),
 			},
+			{
+				path: '/profile',
+				name: 'profile.index',
+				component: () => import('pages/Profile/Index.vue'),
+			},
 			...localization,
 		],
 	},

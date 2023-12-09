@@ -111,7 +111,7 @@ function ___($path, $replace = [], $locale = null)
  * @param bool $auto_create
  * @return null|UserDevice
  */
-function process_user_device(User $user = null, Request $request = null, bool $delete = false): UserDevice|bool
+function process_user_device(User $user = null, Request $request = null, bool $delete = false): null|bool|UserDevice
 {
 	$user = $user ?? auth_user();
 	if (!$user) return null;
@@ -212,4 +212,20 @@ function plural_seconds($seconds, $locale = 'en')
 	}
 
 	return implode(' ', $result);
+}
+
+/**
+ * Calculate discounted price
+ *
+ * @param mixed $price
+ * @param mixed $discount
+ * @return mixed
+ */
+function calculate_discounted_price($price, $discount)
+{
+	if ($discount > 0) {
+		return (int)round($price - ($price * $discount / 100));
+	}
+
+	return $price;
 }

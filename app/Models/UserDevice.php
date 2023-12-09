@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\HasUser;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class UserDevice extends Model
 {
+	use HasUser;
+
 	protected $fillable = [
 		'user_id',
 		'device_id',
@@ -14,10 +16,4 @@ class UserDevice extends Model
 		'device_type',
 		'push_token',
 	];
-
-	/** @return BelongsTo  */
-	public function user()
-	{
-		return $this->belongsTo(User::class);
-	}
 }

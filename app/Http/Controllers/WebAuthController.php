@@ -53,7 +53,7 @@ class WebAuthController extends Controller
 			'email'		=> 'required|string|email|max:255',
 			'password'	=> 'required|string|min:8|max:255',
 			'remember'	=> 'boolean'
-		], [], []);
+		], [], ___('globals.user_fields'));
 
 		// * Try to find the user by email
 		$user = User::where('email', $request->email)->whereNot('type', User::TYPE_USER)->first();

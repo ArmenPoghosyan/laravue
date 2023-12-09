@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
 	LocalizationsController,
 	MultimediaController,
+	SettingsController,
+	UserController,
 	WebAuthController,
 };
 
@@ -24,6 +26,27 @@ Route::prefix('auth')->group(function () {
 // * Authenticated *//
 Route::middleware('auth:sanctum')->group(function () {
 	Route::post('auth/logout',			[WebAuthController::class, 'logout']);
+
+	//* Settings *//
+	ROute::prefix('settings')->group(function () {
+		Route::post('/',				[SettingsController::class, 'index']);
+		Route::put('/',					[SettingsController::class, 'update']);
+	});
+
+	//* User *//
+	Route::prefix('user')->group(function () {
+		Route::get('/',					[UserController::class, 'user']);
+		Route::put('/',					[UserController::class, 'update']);
+
+		Route::prefix('password')->group(function () {
+			Route::put('/',				[UserController::class, 'update_password']);
+			Route::post('check',		[UserController::class, 'check_password']);
+		});
+
+		Route::prefix('email')->group(function () {
+			Route::put('/',				[UserController::class, 'change_email']);
+		});
+	});
 
 	// * Multimedia *//
 	Route::prefix('multimedia')->group(function () {

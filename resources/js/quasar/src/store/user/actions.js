@@ -56,6 +56,10 @@ export async function change_password({ commit }, data) {
 	return await api.put(`${API}/user/password`, data);
 }
 
+export async function change_email({ commit }, data) {
+	return await api.put(`${API}/user/email`, data);
+}
+
 // system actions
 export async function init_cookie_timer({ commit, dispatch }) {
 	let cookie_timer = setInterval(() => {

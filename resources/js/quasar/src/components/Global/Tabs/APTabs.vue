@@ -23,7 +23,12 @@ export default {
 				let el = tabs.value.$el;
 				el.addEventListener('wheel', (event) => {
 					event.preventDefault();
+					el.querySelector('.q-tabs__content').classList.add('q-tabs__content--smooth');
 					el.querySelector('.q-tabs__content').scrollLeft += event.deltaY * 2;
+
+					setTimeout(() => {
+						el.querySelector('.q-tabs__content').classList.remove('q-tabs__content--smooth');
+					}, 100);
 				});
 			}
 		});
@@ -36,7 +41,9 @@ export default {
 <style lang="scss">
 .q-tabs {
 	&__content {
-		scroll-behavior: smooth;
+		&--smooth {
+			scroll-behavior: smooth;
+		}
 	}
 }
 </style>

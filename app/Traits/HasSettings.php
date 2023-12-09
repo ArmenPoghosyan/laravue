@@ -76,4 +76,15 @@ trait HasSettings
 			$this->remove_setting($key);
 		}
 	}
+
+	/**
+	 * Remove all settings
+	 *
+	 * @return bool
+	 */
+	public function clear_settings()
+	{
+		$this->settings()->delete();
+		return true;
+	}
 }

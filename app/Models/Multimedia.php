@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Exceptions\ValidationException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Http\UploadedFile;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Validator;
 
 class Multimedia extends Model
 {
@@ -89,6 +91,38 @@ class Multimedia extends Model
 	}
 
 	/**
+	 * @param mixed $key
+	 * @param mixed $type
+	 * @param bool $validate
+	 * @return Multimedia
+	 * @throws ValidationException
+	 */
+	public static function handle_request_file($key, $type, $validate = true)
+	{
+		if ($validate) {
+			$rules = [
+				$key	=> ['file', 'max:20480'],
+			];
+
+			if ($type === Multimedia::TYPE_PHOTO) {
+				$max_width	= config('image.max_width', 2000);
+				$max_height	= config('image.max_height', 2000);
+
+				$rules[$key][] = 'mimes:jpg,png,bmp,gif';
+				$rules[$key][] = "dimensions:max_width={$max_width},max_height={$max_height}";
+			}
+
+			$validator = Validator::make(request()->only($key), $rules);
+
+			if ($validator->fails()) {
+				throw new ValidationException($validator->errors()->toArray());
+			}
+		}
+
+		return static::handle_file(request()->file($key), $type);
+	}
+
+	/**
 	 * Handle incoming file
 	 *
 	 * @param UploadedFile $file
@@ -111,6 +145,7 @@ class Multimedia extends Model
 			$original_file	= storage_path('app/public/media/' . $file_name);
 
 			$image = Image::make($original_file);
+			$image->orientate();
 
 			foreach (Multimedia::PHOTO_SIZES as $prefix => $size) {
 				$image->resize($size, null, function ($constraint) {

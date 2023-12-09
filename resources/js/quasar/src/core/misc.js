@@ -8,7 +8,13 @@ export const misc = {
 	nice_date(date, time = false, year = true, short = false) {
 		let str_date = '';
 
+		let timezone = Store.state?.app?.timezone;
 		date = moment(date);
+
+		if (timezone) {
+			let offset = timezone.replace(/(\+|-)(\d):/, '$10$2:');
+			date = date.utcOffset(offset);
+		}
 
 		if (date.isSame(moment(), 'day')) {
 			str_date = locales.locale.t('globals.today');
@@ -24,6 +30,14 @@ export const misc = {
 		}
 
 		return str_date;
+	},
+
+	media(path, size = null) {
+		return config.host.current + 'storage/media/' + (size ? size + '_' : '') + path;
+	},
+
+	open_media_popup(media) {
+		Store.commit('app/media_popup', { open: true, media });
 	},
 
 	readable_seconds: (seconds) => {
