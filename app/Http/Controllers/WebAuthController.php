@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{Company, User};
+use App\Models\{User};
 use Illuminate\Http\{JsonResponse, Request, Response};
 use Illuminate\Support\Facades\{Auth, Hash, Password};
 
@@ -19,22 +19,10 @@ class WebAuthController extends Controller
 		$user = auth_user();
 
 		if ($user) {
-			/** @var Company */
-			$company = $user->company;
-
-			if ($company) {
-				$company
-					->setRelation('settings',		$company->settings->pluck('value', 'key'))
-					->setRelation('working_days',	$company->normalized_working_days)
-					//
-				;
-			}
-
-			$user->setRelation('settings',			$user->settings->pluck('value', 'key'));
+			// $user->setRelation('settings',			$user->settings->pluck('value', 'key'));
 
 			return success([
 				'user' 		=> $user,
-				'company'	=> $company
 			]);
 		}
 

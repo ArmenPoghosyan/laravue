@@ -3,10 +3,10 @@
 namespace App\Models;
 
 use App\Notifications\ResetPasswordNotification;
-use App\Traits\{HasAchievements, HasCoins, HasCompany, HasEvents, HasLocalScopes, HasMoney, HasNotifications, HasOrders, HasSettings, HasShopDiscounts};
+use App\Traits\{HasLocalScopes, HasNotifications, HasSettings};
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\{MustVerifyEmail};
-use Illuminate\Database\Eloquent\Relations\{HasMany, HasOne, MorphMany};
+use Illuminate\Database\Eloquent\Relations\{HasMany};
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -43,7 +43,8 @@ class User extends Authenticatable implements MustVerifyEmail
 		'birth_date',
 		'password',
 		'language',
-		'email_verified_at'
+		'email_verified_at',
+		'deleted_at'
 	];
 
 	protected $hidden = [
@@ -137,5 +138,15 @@ class User extends Authenticatable implements MustVerifyEmail
 	public function check_password($password)
 	{
 		return Hash::check($password, $this->password);
+	}
+
+	/**
+	 * Get all user tokens for push notifications
+	 *
+	 * @return mixed
+	 */
+	public function routeNotificationForFcm()
+	{
+		return $this->devices()->pluck('push_token')->toArray();
 	}
 }

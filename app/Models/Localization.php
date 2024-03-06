@@ -208,6 +208,15 @@ class Localization extends Model
 			$locales[$default_locale] = static::getCached($default_locale);
 		}
 
+		// If the user is not authenticated, then we need to get all the locales
+		if (!auth_user()) {
+			foreach (config('app.locales') as $locale) {
+				if (!isset($locales[$locale])) {
+					$locales[$locale] = static::getCached($locale);
+				}
+			}
+		}
+
 		return $locales;
 	}
 

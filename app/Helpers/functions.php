@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Str;
 use Illuminate\Http\JsonResponse;
-use App\Models\{User, Company, UserDevice};
+use App\Models\{User, UserDevice};
 use Illuminate\Http\Request;
 
 #region User

@@ -1,4 +1,4 @@
-import localization from './segments/localizations';
+import * as segments from './segments';
 
 const routes = [
 	{
@@ -7,16 +7,15 @@ const routes = [
 		component: () => import('layouts/MainLayout.vue'),
 		children: [
 			{
-				path: '/',
-				name: 'home',
-				component: () => import('pages/HomePage.vue'),
-			},
-			{
 				path: '/profile',
 				name: 'profile.index',
 				component: () => import('pages/Profile/Index.vue'),
 			},
-			...localization,
+
+			// Attach all segments automatically
+			...Object.keys(segments).reduce((acc, segment) => {
+				return [...acc, ...segments[segment]];
+			}, []),
 		],
 	},
 

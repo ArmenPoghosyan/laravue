@@ -5,7 +5,7 @@
 /public/storage
 /public/deploy
 /storage/*.key
-/storage/lang
+/storage/lang/*.json
 /vendor
 .env
 .env.backup

@@ -1,3 +1,4 @@
+@import 'animations.scss';
 @import 'content.scss';
 
 body {
@@ -44,7 +45,7 @@ body {
 	border-radius: 10px;
 
 	&-borders {
-		border-radius: $borderRadius;
+		border-radius: $border-radius;
 	}
 
 	&-0 {
@@ -161,5 +162,16 @@ body {
 
 	&-color {
 		background-color: rgba(black, 0.5);
+	}
+}
+
+
+.bg {
+	&-transparent {
+		background-color: transparent !important;
+	}
+
+	&-dark-page {
+		background-color: $dark-page;
 	}
 }

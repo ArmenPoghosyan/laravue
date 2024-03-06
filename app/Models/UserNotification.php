@@ -10,7 +10,6 @@ class UserNotification extends DatabaseNotification
 	const CHANNEL_SYSTEM			= 'system';
 	const CHANNEL_USER				= 'user';
 
-
 	protected $hidden = [
 		'type',
 		'notifiable_type',

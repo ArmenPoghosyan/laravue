@@ -13,11 +13,12 @@ trait HasUser
 	{
 		$relation = $this->belongsTo(User::class);
 
-		if ($route = Route::current()) {
-			if (in_array('api', $route->middleware())) {
-				$relation->withTrashed();
-			}
-		}
+		//* If you want to include trashed users in the relationship
+		// if ($route = Route::current()) {
+		// 	if (in_array('api', $route->middleware())) {
+		// 		$relation->withTrashed();
+		// 	}
+		// }
 
 		return $relation;
 	}

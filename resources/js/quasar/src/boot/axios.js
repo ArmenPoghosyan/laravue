@@ -1,6 +1,7 @@
 import { boot } from 'quasar/wrappers';
 import axios from 'axios';
 import config from 'app/project.config';
+import { cookie } from 'src/core/cookie';
 
 const axiosInstance = axios.create({
 	baseURL: config.host.current,
@@ -13,6 +14,13 @@ async function sendRequest(url, params, method = 'GET', isForm = false, config =
 			'Content-Type': 'application/json',
 			// 'X-Socket-Id': core.echo.socketId(),
 		};
+
+		let xsrf_token = cookie.by_name('XSRF-TOKEN');
+		if (xsrf_token) {
+			xsrf_token = decodeURIComponent(xsrf_token);
+			headers['X-XSRF-TOKEN'] = xsrf_token;
+		}
+
 		if (isForm) {
 			headers['Content-Type'] = 'multipart/form-data';
 		}

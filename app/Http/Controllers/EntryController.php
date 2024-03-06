@@ -13,6 +13,7 @@ class EntryController extends Controller
 
 		if (file_exists($blade_file)) {
 			return view('index', [
+				'redirect'	=> session('url.intended'),
 				'locales'	=> json_encode(Localization::getUserLocales()),
 			]);
 		}

@@ -1,5 +1,5 @@
 <template>
-	<q-tabs ref="tabs">
+	<q-tabs ref="tabs" :class="{ 'q-tabs--vertical-center': verticalCenter }">
 		<slot />
 	</q-tabs>
 </template>
@@ -10,6 +10,11 @@ import { onMounted, ref } from 'vue';
 export default {
 	props: {
 		mouseScroll: {
+			type: Boolean,
+			default: false,
+		},
+
+		verticalCenter: {
 			type: Boolean,
 			default: false,
 		},
@@ -40,9 +45,18 @@ export default {
 
 <style lang="scss">
 .q-tabs {
+	$this: &;
 	&__content {
 		&--smooth {
 			scroll-behavior: smooth;
+		}
+	}
+
+	&--vertical-center {
+		#{$this}__content {
+			display: flex !important;
+			flex-direction: column;
+			justify-content: center;
 		}
 	}
 }

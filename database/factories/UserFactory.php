@@ -26,9 +26,7 @@ class UserFactory extends Factory
 			'avatar'					=> '',
 			'birth_date'				=> fake()->dateTimeBetween('-20 years', '-10 years'),
 			'password'					=> 'password',
-			'force_change_password'		=> false,
 			'language'					=> 'en',
-			'league'					=> fake()->randomElement(array_keys(config('league')))
 		];
 	}
 }

@@ -13,17 +13,11 @@ class UserController extends Controller
 	{
 		if ($user_id) {
 			/** @var User */
-			$user = User::same_company()
-				->with_all()
-				->findOrFail($user_id)
-				//
-			;
+			$user = User::findOrFail($user_id);
 		} else {
 			$user				= auth_user(true);
 			$user['settings']	= $user->settings()->pluck('value', 'key');
 		}
-
-		$user['achievements'] = $user->grouped_achievements();
 
 		return success([
 			'user'			=> $user
@@ -38,7 +32,6 @@ class UserController extends Controller
 		$validations	= [
 			'first_name'	=> 'required|string|max:255',
 			'last_name'		=> 'required|string|max:255',
-			'nick_name'		=> 'required|string|max:255',
 			'phone'			=> 'required|string|max:255',
 			'birth_date'	=> 'required|date',
 		];
@@ -49,10 +42,6 @@ class UserController extends Controller
 
 		if ($request->has('last_name')) {
 			$fields[] = 'last_name';
-		}
-
-		if ($request->has('nick_name')) {
-			$fields[] = 'nick_name';
 		}
 
 		if ($request->has('phone')) {
@@ -68,7 +57,6 @@ class UserController extends Controller
 			[],
 			___('globals.user_fields')
 		);
-
 
 		if ($request->hasFile('avatar')) {
 			$multimedia = Multimedia::handle_request_file('avatar', Multimedia::TYPE_PHOTO);
