@@ -41,7 +41,7 @@ class WebAuthController extends Controller
 			'email'		=> 'required|string|email|max:255',
 			'password'	=> 'required|string|min:8|max:255',
 			'remember'	=> 'boolean'
-		], [], ___('globals.user_fields'));
+		], [], ___('globals.user_fields', fallback: []));
 
 		// * Try to find the user by email
 		$user = User::where('email', $request->email)->whereNot('type', User::TYPE_USER)->first();
@@ -78,7 +78,7 @@ class WebAuthController extends Controller
 	{
 		$request->validate([
 			'email'		=> 'required|string|email|max:255|exists:users,email',
-		], [], ___('globals.user_fields'));
+		], [], ___('globals.user_fields', fallback: []));
 
 		$status = Password::sendResetLink($request->only('email'));
 
@@ -108,7 +108,7 @@ class WebAuthController extends Controller
 			'token'		=> 'required|string',
 			'email'		=> 'required|string|email|max:255|exists:users,email',
 			'password'	=> 'required|string|min:8|max:255|confirmed',
-		], [], ___('globals.user_fields'));
+		], [], ___('globals.user_fields', fallback: []));
 
 		$status = Password::reset($request->only('email', 'token', 'password'), function ($user, $password) {
 			$user->update(['password' => $password]);

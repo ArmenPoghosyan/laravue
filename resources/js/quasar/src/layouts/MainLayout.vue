@@ -68,6 +68,16 @@
 
 				<ap-card-section no-padding class="full-height">
 					<ap-list separator>
+						<ap-item clickable exact :to="{ name: 'users.index' }" active-class="bg-grey-3 text-primary">
+							<ap-item-section icon>
+								<ap-icon name="sym_o_group" size="24px" />
+							</ap-item-section>
+
+							<ap-item-section>
+								<ap-item-label>{{ $t('pages.users.title') }}</ap-item-label>
+							</ap-item-section>
+						</ap-item>
+
 						<ap-item clickable exact :to="{ name: 'localizations.index' }" active-class="bg-grey-3 text-primary">
 							<ap-item-section icon>
 								<ap-icon name="translate" size="24px" />

@@ -14,6 +14,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 use Carbon\Carbon;
+use Mockery\Matcher\Type;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -32,6 +33,12 @@ class User extends Authenticatable implements MustVerifyEmail
 	const TYPE_USER		= 'user';
 	const TYPE_MANAGER	= 'manager';
 	const TYPE_ADMIN	= 'admin';
+
+	const TYPES = [
+		self::TYPE_USER,
+		self::TYPE_MANAGER,
+		self::TYPE_ADMIN,
+	];
 
 	protected $fillable = [
 		'first_name',

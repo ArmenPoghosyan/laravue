@@ -17,6 +17,14 @@ const config = {
 	is_production,
 };
 
-config.host.current = is_production ? config.host.production : config.host.development;
+if (is_production) {
+	config.host.current = config.host.production;
+} else {
+	if (config.host.development) {
+		config.host.current = config.host.development;
+	} else {
+		config.host.current = location.protocol + '//' + location.hostname;
+	}
+}
 
 export default config;

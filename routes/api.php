@@ -6,6 +6,7 @@ use App\Http\Controllers\{
 	MultimediaController,
 	SettingsController,
 	UserController,
+	UsersController,
 	WebAuthController,
 };
 
@@ -45,6 +46,19 @@ Route::middleware('auth:sanctum')->group(function () {
 
 		Route::prefix('email')->group(function () {
 			Route::put('/',				[UserController::class, 'change_email']);
+		});
+	});
+
+	//* Users *//
+	Route::prefix('users')->group(function () {
+		Route::post('/', 				[UsersController::class, 'index']);
+		Route::post('create',			[UsersController::class, 'store']);
+
+		Route::prefix('{TUser}')->group(function () {
+			Route::get('/',				[UsersController::class, 'show']);
+			Route::put('/',				[UsersController::class, 'update']);
+			Route::put('/status',		[UsersController::class, 'update_status']);
+			Route::delete('/',			[UsersController::class, 'destroy']);
 		});
 	});
 

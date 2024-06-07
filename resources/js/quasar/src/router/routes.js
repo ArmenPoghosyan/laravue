@@ -7,6 +7,11 @@ const routes = [
 		component: () => import('layouts/MainLayout.vue'),
 		children: [
 			{
+				path: '/',
+				name: 'home',
+				component: () => import('pages/HomePage.vue'),
+			},
+			{
 				path: '/profile',
 				name: 'profile.index',
 				component: () => import('pages/Profile/Index.vue'),

@@ -50,6 +50,69 @@ function fail($data = [], $code = 200)
 }
 #endregion
 
+#region __Geo__
+
+/**
+ * Get User IP
+ * @return mixed
+ */
+function user_ip()
+{
+	// Get real visitor IP behind CloudFlare network
+	if (isset($_SERVER["HTTP_CF_CONNECTING_IP"])) {
+		$_SERVER['REMOTE_ADDR'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
+		$_SERVER['HTTP_CLIENT_IP'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
+	}
+
+	// Sometimes the `HTTP_CLIENT_IP` can be used by proxy servers
+	$ip = @$_SERVER['HTTP_CLIENT_IP'];
+	if (filter_var($ip, FILTER_VALIDATE_IP)) {
+		return $ip;
+	}
+
+	// Sometimes the `HTTP_X_FORWARDED_FOR` can contain more than IPs
+	$forward_ips = @$_SERVER['HTTP_X_FORWARDED_FOR'];
+	if ($forward_ips) {
+		$all_ips = explode(',', $forward_ips);
+
+		foreach ($all_ips as $ip) {
+			if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+				return $ip;
+			}
+		}
+	}
+
+	return $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+}
+
+/**
+ * Get country by IP address
+ *
+ * @param mixed $ip
+ * @return mixed
+ */
+function detect_country($ip)
+{
+	try {
+		if (in_array($ip, ['127.0.0.1', '192.168.0.1'])) throw new Exception;
+		$response = json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip={$ip}"), true);
+		if (!isset($response['geoplugin_countryCode'])) throw new Exception;
+
+		return [
+			'country_name'	=> $response['geoplugin_countryName'],
+			'country_code'	=> $response['geoplugin_countryCode'],
+		];
+
+		return $response;
+	} catch (\Exception $e) {
+		return [
+			'country_name'	=> null, //? config('app.fallback_country'),
+			'country_code'	=> null, //? config('app.fallback_country_code'),
+		];
+	}
+}
+#endregion
+
 function get_page_limit($limit = 20)
 {
 	return request()->get('limit', $limit);
@@ -62,8 +125,10 @@ function get_page_limit($limit = 20)
  * @param mixed $path
  * @return mixed
  */
-function ___($path, $replace = [], $locale = null)
+function ___($path, $replace = [], $locale = null, $fallback = null)
 {
+	$original_path = $path;
+
 	$parts	= explode(".", $path);
 	$base	= __(current($parts), [], $locale);
 	unset($parts[0]);
@@ -78,7 +143,7 @@ function ___($path, $replace = [], $locale = null)
 		try {
 			$base = $base[$part];
 		} catch (\Throwable $th) {
-			return $path;
+			return $fallback ?? $original_path;
 		}
 	}
 

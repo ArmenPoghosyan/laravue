@@ -6,11 +6,16 @@ import user from './user';
 
 import localization from './localization';
 import multimedia from './multimedia';
+import users from './users';
 
+/**
+ * @type {import('vuex').Store}
+ */
 const Store = createStore({
 	modules: {
 		app,
 		user,
+		users,
 		multimedia,
 		localization,
 	},

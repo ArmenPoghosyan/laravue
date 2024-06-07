@@ -3,7 +3,7 @@
 		<template v-slot:append>
 			<q-icon name="sym_o_calendar_month" class="cursor-pointer">
 				<q-popup-proxy v-model="pickers.date" cover transition-show="fade" transition-hide="fade" :breakpoint="600">
-					<ap-date :modelValue="value?.from == value?.to ? value?.from : value" :range="range" :options="calendarOptions" @update:modelValue="dateUpdated">
+					<ap-date :modelValue="range ? (value?.from == value?.to ? value?.from : value) : value" :range="range" :options="calendarOptions" @update:modelValue="dateUpdated">
 						<div class="row items-center justify-end">
 							<q-btn v-close-popup no-caps :label="$t('globals.apply')" color="primary" flat />
 						</div>
@@ -71,25 +71,49 @@ export default {
 		});
 
 		watch(value, function (newValue) {
-			emit('update:modelValue', newValue);
+			if (props.range) {
+				if (typeof newValue == 'object') {
+					emit('update:modelValue', newValue);
+				}
+			} else {
+				emit('update:modelValue', newValue);
+			}
 		});
 
 		onUpdated(() => {
 			value.value = props.modelValue;
 		});
 
-		const formattedDate = computed(() => {
-			if (props.range) {
-				if (typeof value.value == 'object') {
-					return core.nice_date(value.value?.from) + ' - ' + core.nice_date(value.value?.to);
+		const formattedDate = computed({
+			get() {
+				if (props.range) {
+					if (typeof value.value == 'object') {
+						if (!value.value?.from && !value.value?.to) return '';
+						return core.nice_date(value.value?.from) + ' - ' + core.nice_date(value.value?.to);
+					}
+				} else {
+					if (!value.value) return '';
+
+					return core.nice_date(props.modelValue, props.time);
 				}
-			} else {
-				if (!value.value) return '';
 
-				return core.nice_date(props.modelValue, props.time);
-			}
+				return value.value;
+			},
 
-			return value.value;
+			set(new_value) {
+				if (new_value) {
+					value.value = new_value;
+				} else {
+					if (props.range) {
+						value.value = {
+							from: null,
+							to: null,
+						};
+					} else {
+						value.value = null;
+					}
+				}
+			},
 		});
 
 		function calendarOptions(date) {
@@ -120,30 +144,41 @@ export default {
 					reason = 'add-day';
 				}
 
-				const from = moment(value.value?.from || moment());
-				const to = moment(value.value?.to || moment());
+				let from = moment(value.value?.from || moment());
+				let to = moment(value.value?.to || moment());
 
-				if (reason == 'add-day') {
-					from.set('date', details.day);
-					from.set('month', details.month - 1);
-					from.set('year', details.year);
+				switch (reason) {
+					case 'add-day':
+						from.set('date', details.day);
+						from.set('month', details.month - 1);
+						from.set('year', details.year);
 
-					to.set('date', details.day);
-					to.set('month', details.month - 1);
-					to.set('year', details.year);
-				} else {
-					from.set('date', details.from.day);
-					from.set('month', details.from.month - 1);
-					from.set('year', details.from.year);
+						to.set('date', details.day);
+						to.set('month', details.month - 1);
+						to.set('year', details.year);
+						break;
 
-					to.set('date', details.to.day);
-					to.set('month', details.to.month - 1);
-					to.set('year', details.to.year);
+					case 'remove-day':
+						from = null;
+						to = null;
+						break;
+
+					case 'add-range':
+						from.set('date', details.from.day);
+						from.set('month', details.from.month - 1);
+						from.set('year', details.from.year);
+						to.set('date', details.to.day);
+						to.set('month', details.to.month - 1);
+						to.set('year', details.to.year);
+						break;
+
+					default:
+						break;
 				}
 
 				value.value = {
-					from: from.format('YYYY-MM-DD'),
-					to: to.format('YYYY-MM-DD'),
+					from: from ? from.format('YYYY-MM-DD') : null,
+					to: to ? to.format('YYYY-MM-DD') : null,
 				};
 
 				// emit('update:modelValue', value.value);

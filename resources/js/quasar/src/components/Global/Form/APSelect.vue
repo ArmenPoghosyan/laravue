@@ -5,6 +5,10 @@
 		<template v-slot:option="scope" v-if="availableSlots.includes('option')">
 			<slot name="option" v-bind="scope" />
 		</template>
+
+		<template v-slot:selected v-if="availableSlots.includes('selected')">
+			<slot name="selected" />
+		</template>
 	</q-select>
 </template>
 

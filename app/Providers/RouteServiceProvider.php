@@ -45,6 +45,10 @@ class RouteServiceProvider extends ServiceProvider
 				->where('any', '.*')
 				//
 			;
+
+			Route::bind('TUser', function ($value) {
+				return \App\Models\User::withTrashed()->findOrFail($value);
+			});
 		});
 	}
 }

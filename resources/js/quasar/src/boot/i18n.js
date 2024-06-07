@@ -39,6 +39,7 @@ export default boot(async ({ app }) => {
 		let messages = await api.getCached('api/app/localizations');
 
 		if (messages?.status) {
+			window.__locales = messages.locales;
 			Object.keys(messages.locales).map((language) => {
 				i18n.global.setLocaleMessage(language, messages.locales[language] ?? []);
 			});
@@ -50,7 +51,7 @@ export default boot(async ({ app }) => {
 	lists.languages = config.app.languages.map((language) => {
 		return {
 			value: language,
-			label: i18n.global.t(`globals.languages.${language}`),
+			label: i18n.global.t(`globals.language.${language}`),
 		};
 	});
 

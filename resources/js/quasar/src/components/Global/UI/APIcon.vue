@@ -1,3 +1,5 @@
 <template>
-	<q-icon />
+	<q-icon>
+		<slot />
+	</q-icon>
 </template>

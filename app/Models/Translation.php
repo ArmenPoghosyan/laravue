@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\{Model, Builder};
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Translation extends Model
@@ -31,5 +31,38 @@ class Translation extends Model
 		}
 
 		$query->where('value', 'LIKE', "%{$search}%");
+	}
+
+
+	/**
+	 * Get the value of a translation
+	 *
+	 * @param mixed $label
+	 * @param mixed $class
+	 * @param mixed $id
+	 * @param string $language
+	 * @return Builder
+	 */
+	public static function get_value($label, $class, $id = null, $language = 'en',)
+	{
+		$query = static::query()->select('value');
+
+		if ($id) {
+			if (strpos($id, '.') !== false) {
+				$query->whereColumn('translatable_id', $id);
+			} else {
+				$query->where('translatable_id', $id);
+			}
+		}
+
+		if ($class) {
+			$query->where('translatable_type', $class);
+		}
+
+		if ($language) {
+			$query->where('language', $language);
+		}
+
+		return $query->where('label', $label)->limit(1);
 	}
 }

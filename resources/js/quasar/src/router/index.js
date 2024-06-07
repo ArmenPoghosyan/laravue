@@ -7,6 +7,9 @@ import config from 'app/project.config';
 
 const createHistory = process.env.SERVER ? createMemoryHistory : process.env.VUE_ROUTER_MODE === 'history' ? createWebHistory : createWebHashHistory;
 
+/**
+ * @type {import('vue-router').Router}
+ */
 const Router = createRouter({
 	scrollBehavior: () => ({ left: 0, top: 0 }),
 	routes: routes,

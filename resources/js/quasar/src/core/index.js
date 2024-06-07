@@ -6,6 +6,7 @@ import { lists } from './lists';
 import { locales } from './locales';
 import { pagination } from './pagination';
 import { misc } from './misc';
+import { quasar } from './quasar';
 import config from 'app/project.config';
 
 export const core = {
@@ -23,4 +24,5 @@ export const core = {
 	...validation,
 	...pagination,
 	...misc,
+	...quasar,
 };

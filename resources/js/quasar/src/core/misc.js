@@ -3,6 +3,7 @@ import { locales } from './locales';
 import moment from 'moment/moment';
 import { Store } from 'src/store';
 import { core } from '.';
+import { ref, watch } from 'vue';
 
 export const misc = {
 	nice_date(date, time = false, year = true, short = false) {
@@ -33,7 +34,19 @@ export const misc = {
 	},
 
 	media(path, size = null) {
-		return config.host.current + 'storage/media/' + (size ? size + '_' : '') + path;
+		let hostname = null;
+
+		if (config.is_production) {
+			hostname = location.protocol + '//' + location.hostname;
+		} else {
+			hostname = config.host.current;
+		}
+
+		return hostname + '/storage/media/' + (size ? size + '_' : '') + path;
+	},
+
+	media_url(id, size = 'l') {
+		return `${config.host.current}media/${id}/${size}`;
 	},
 
 	open_media_popup(media) {
@@ -72,5 +85,42 @@ export const misc = {
 
 		r(object, false);
 		return form;
+	},
+
+	watcher(variable, props, emit) {
+		const data = ref(props[variable] || null);
+
+		watch(
+			() => props[variable],
+			(value) => {
+				data.value = value;
+			}
+		);
+
+		watch(
+			() => data.value,
+			(value) => {
+				emit(`update:${variable}`, value);
+			}
+		);
+
+		return data;
+	},
+
+	slugify_text: async (text, language = 'en') => {
+		const response = await core.store.dispatch('localization/slugify', {
+			text,
+			language,
+		});
+
+		if (response.status) {
+			return response?.text || '';
+		}
+
+		return '';
+	},
+
+	find_currency(id) {
+		return core.store.state.app?.currencies?.find((currency) => currency.id === id)?.name ?? '';
 	},
 };

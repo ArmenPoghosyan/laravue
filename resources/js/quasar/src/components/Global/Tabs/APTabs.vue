@@ -1,5 +1,5 @@
 <template>
-	<q-tabs ref="tabs" :class="{ 'q-tabs--vertical-center': verticalCenter }">
+	<q-tabs ref="tabs" :class="{ 'q-tabs--vertical-center': verticalCenter }" active-color="primary">
 		<slot />
 	</q-tabs>
 </template>

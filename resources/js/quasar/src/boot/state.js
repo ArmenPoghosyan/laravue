@@ -19,5 +19,6 @@ export default boot(({ app, store }) => {
 	app.config.globalProperties.nice_date = core.nice_date;
 	app.config.globalProperties.readable_seconds = core.readable_seconds;
 	app.config.globalProperties.media = core.media;
+	app.config.globalProperties.media_url = core.media_url;
 	app.config.globalProperties.open_media_popup = core.open_media_popup;
 });

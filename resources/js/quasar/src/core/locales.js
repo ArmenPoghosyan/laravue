@@ -7,12 +7,18 @@ export const locales = {
 	locale: i18n.global,
 	current_language: i18n.global.locale,
 
-	spreadLanguages(value = '') {
+	spreadLanguages(value = '', languages = null) {
 		let object = {};
 
-		lists.languages.forEach((language) => {
-			object[language.value] = value;
-		});
+		if (languages) {
+			languages.forEach((language) => {
+				object[language] = value;
+			});
+		} else {
+			lists.language_list.value.forEach((language) => {
+				object[language.value] = value;
+			});
+		}
 
 		return object;
 	},
@@ -24,5 +30,9 @@ export const locales = {
 			await Store.dispatch('app/set_locale', locale);
 			window.location.reload();
 		}
+	},
+
+	label(key, replace = {}) {
+		return i18n.global.t(key, replace);
 	},
 };

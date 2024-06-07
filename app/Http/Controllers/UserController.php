@@ -121,6 +121,7 @@ class UserController extends Controller
 		try {
 			Notification::route('mail', $request->email)->notify(new EmailChangeNotification(auth_user(), $request->email));
 		} catch (\Throwable $th) {
+			return $th->getMessage();
 			return fail();
 		}
 
