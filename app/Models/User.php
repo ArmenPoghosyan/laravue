@@ -49,6 +49,7 @@ class User extends Authenticatable implements MustVerifyEmail
 		'avatar',
 		'birth_date',
 		'password',
+		'force_password_change',
 		'language',
 		'email_verified_at',
 		'deleted_at'
@@ -66,11 +67,13 @@ class User extends Authenticatable implements MustVerifyEmail
 		'birth_date'			=> 'string',
 		'email_verified_at'		=> 'datetime',
 		'password'				=> 'hashed',
+		'force_password_change'	=> 'boolean',
 	];
 
 	protected $appends = [
 		'age',
 		'full_name',
+		'status'
 	];
 
 	/** @return HasMany  */
@@ -123,6 +126,20 @@ class User extends Authenticatable implements MustVerifyEmail
 	public function setPasswordAttribute($value)
 	{
 		$this->attributes['password'] = Hash::make($value);
+	}
+
+	/**
+	 * Get the user status
+	 *
+	 * @return string
+	 */
+	public function getStatusAttribute()
+	{
+		if ($this->deleted_at) {
+			return 'archived';
+		}
+
+		return 'active';
 	}
 
 	/**

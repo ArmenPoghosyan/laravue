@@ -44,7 +44,7 @@ class WebAuthController extends Controller
 		], [], ___('globals.user_fields', fallback: []));
 
 		// * Try to find the user by email
-		$user = User::where('email', $request->email)->whereNot('type', User::TYPE_USER)->first();
+		$user = User::where('email', $request->email)->first();
 
 		// * If the user doesn't exist or the password is incorrect
 		if (!$user || !Hash::check($request->password, $user->password)) {

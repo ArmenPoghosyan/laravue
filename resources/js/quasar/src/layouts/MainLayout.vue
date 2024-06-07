@@ -118,17 +118,18 @@
 
 		<password-popup />
 		<media-popup />
+		<change-password-popup v-if="$user?.force_password_change" />
 	</ap-layout>
 </template>
 
 <script>
-import { PasswordPopup, MediaPopup } from 'src/components/Popups';
+import { PasswordPopup, MediaPopup, ChangePasswordPopup } from 'src/components/Popups';
 import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
 	name: 'MainLayout',
 
-	components: { PasswordPopup, MediaPopup },
+	components: { PasswordPopup, MediaPopup, ChangePasswordPopup },
 
 	setup() {
 		const drawer = ref(false);

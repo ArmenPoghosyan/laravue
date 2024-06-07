@@ -106,7 +106,7 @@ class UserController extends Controller
 
 		auth_user()->update([
 			'password'				=> $request->password,
-			'force_change_password'	=> false,
+			'force_password_change'	=> false,
 		]);
 
 		return success();
@@ -141,6 +141,6 @@ class UserController extends Controller
 			'email'	=> $request->email
 		]);
 
-		return $user->type == User::TYPE_USER ? redirect('/email-verified') : redirect('/');
+		return redirect('/');
 	}
 }

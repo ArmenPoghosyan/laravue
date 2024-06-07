@@ -59,7 +59,7 @@
 				<ap-separator />
 
 				<ap-card-section class="row q-col-gutter-md">
-					<ap-select v-if="$user.type == 'admin'" class="col-xs-12" :label="$t('globals.user_fields.type')" :options="user_types" v-model="invite.data.type" map-options emit-value validate="type" />
+					<ap-select v-if="$user.type == 'admin'" class="col-xs-12" :label="$t('globals.user_fields.type')" :options="lists.user_types.value" v-model="invite.data.type" map-options emit-value validate="type" />
 
 					<ap-input class="col-xs-12 col-sm-6" type="first_name" v-model="invite.data.first_name" :label="$t('globals.user_fields.first_name')" validate="first_name" />
 					<ap-input class="col-xs-12 col-sm-6" type="last_name" v-model="invite.data.last_name" :label="$t('globals.user_fields.last_name')" validate="last_name" />
@@ -177,13 +177,6 @@ export default {
 			},
 		];
 
-		const user_types = [
-			{ label: core.locale.t('globals.user_types.admin'), value: 'admin' },
-			{ label: core.locale.t('globals.user_types.manager'), value: 'manager' },
-			{ label: core.locale.t('globals.user_types.user'), value: 'user' },
-			// { label: core.locale.t('globals.user_types.user'), value: 'user' },
-		];
-
 		async function fetch(props = null) {
 			state.value.loading = true;
 
@@ -248,7 +241,6 @@ export default {
 			pagination,
 			invite,
 			columns,
-			user_types,
 			//
 			fetch,
 			open_invite,

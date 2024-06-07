@@ -31,22 +31,22 @@
 				<ap-table hide-bottom flat :columns="columns" :rows="state.list" color="primary" :loading="state.loading" :pagination="{ rowsPerPage: 1000 }">
 					<template v-slot:body="props">
 						<ap-tr @click="props.row.type == 'node' ? $router.push({ name: 'localizations.index', params: { id: props.row.id } }) : show_dialog(props.row)">
-							<ap-td key="type" class="cursor-pointer">
+							<ap-td :props="props" key="type" class="cursor-pointer">
 								<ap-icon v-if="props.row.type == 'value'" name="sym_o_line_start_diamond" size="22px" color="primary" />
 								<ap-icon v-else name="sym_o_network_node" size="22px" color="primary" />
 							</ap-td>
 
-							<ap-td key="key">
+							<ap-td :props="props" key="key">
 								{{ props.row.key }}
 							</ap-td>
 
-							<ap-td key="label">
+							<ap-td :props="props" key="label">
 								{{ props.row.label }}
 							</ap-td>
 
-							<ap-td key="value" v-html="props.row.value?.[state?.language] || ''" />
+							<ap-td :props="props" key="value" v-html="props.row.value?.[state?.language] || ''" />
 
-							<ap-td key="actions">
+							<ap-td :props="props" key="actions">
 								<div class="no-wrap row justify-end q-gap-sm">
 									<ap-button icon="content_copy" size="xs" round @click.stop="(event) => copy_path(event, props.row.key)" />
 									<ap-button icon="edit" size="xs" round @click.stop="show_dialog(props.row)" />
@@ -311,6 +311,7 @@ export default {
 							.dialog({
 								title: core.locale.t('globals.please_note'),
 								message: core.locale.t('pages.localizations.delete_node'),
+								cancel: true
 							})
 							.onOk(process_delete);
 					} else {

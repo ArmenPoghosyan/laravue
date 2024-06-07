@@ -96,6 +96,7 @@ class UsersController extends Controller
 			'birth_date'			=> $request->birth_date ?? null,
 			'language'				=> config('app.locale'),
 			'password'				=> $password,
+			'force_password_change'	=> true,
 		]);
 
 		try {

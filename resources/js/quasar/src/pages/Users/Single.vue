@@ -16,7 +16,7 @@
 						<!--  -->
 					</div>
 
-					<span v-if="state.user.type != 'owner' && state.user.id != $user.id" class="row items-center q-gap-sm text-weight-bold cursor-pointer">
+					<span v-if="state.user.type != 'admin' && state.user.id != $user.id" class="row items-center q-gap-sm text-weight-bold cursor-pointer">
 						<ap-button round size="xs" icon="sym_o_edit" />
 						<span v-if="state.user.status == 'active'" class="text-positive">{{ $t('globals.active') }}</span>
 						<span v-if="state.user.status == 'archived'" class="text-negative">{{ $t('globals.archived') }}</span>
@@ -35,12 +35,11 @@
 				</ap-card-section>
 
 				<ap-card-section class="q-py-none full-width overflow-hidden" no-padding>
-					<ap-tabs outside-arrows mouse-scroll v-model="state.page" inline-label active-color="primary" align="left">
+					<!-- <ap-tabs outside-arrows mouse-scroll v-model="state.page" inline-label active-color="primary" align="left">
 						<ap-route-tab :to="{ name: 'user.index' }" name="info" icon="sym_o_person" :label="$t('pages.users.info')" />
-						<ap-route-tab :to="{ name: 'user.websites' }" name="websites" icon="sym_o_language" :label="$t('pages.websites.title')" />
-					</ap-tabs>
+					</ap-tabs> -->
 
-					<ap-separator />
+					<!-- <ap-separator /> -->
 
 					<div class="column full-width" :class="{ 'q-py-sm': $q.screen.gt.xs, 'q-pa-md': $q.screen.lt.sm }">
 						<Info v-if="state.page == 'info'" v-model="state.user" />
