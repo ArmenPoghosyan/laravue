@@ -210,7 +210,7 @@ trait HasTranslations
 					if ($model?->_load_translations) {
 						foreach ($translations as &$translation) {
 							if (strlen($translation) == 0) {
-								$translation = $translations[$model?->fallback_language ?? config('app.fallback_locale')];
+								$translation = $translations[$model?->fallback_language ?? config('app.fallback_locale')] ?? '';
 							}
 						}
 

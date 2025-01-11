@@ -1,8 +1,8 @@
 {
 	"name": "quasar",
 	"version": "0.0.1",
-	"description": "Gingy",
-	"productName": "Gingy",
+	"description": "Laravue",
+	"productName": "Laravue",
 	"author": "Aparg LLC",
 	"private": true,
 	"dependencies": {

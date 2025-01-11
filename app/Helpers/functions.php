@@ -6,6 +6,12 @@ use App\Models\{User, UserDevice};
 use Illuminate\Http\Request;
 
 #region User
+/**
+ * Get the user
+ *
+ * @param bool $with_all
+ * @return null|User
+ */
 function auth_user($with_all = false): ?User
 {
 	if ($user = auth()->user()) {
@@ -19,11 +25,22 @@ function auth_user($with_all = false): ?User
 	return null;
 }
 
+/**
+ * Get the user's id
+ *
+ * @return null|int
+ */
 function user_id(): ?int
 {
 	return auth_user()?->id ?? null;
 }
 
+/**
+ * Throw an unauthorized exception
+ *
+ * @return never
+ * @throws UnauthorizedException
+ */
 function unauthorized()
 {
 	throw new \Illuminate\Validation\UnauthorizedException();
@@ -31,6 +48,14 @@ function unauthorized()
 #endregion
 
 #region Status
+/**
+ * Return a response with a status
+ *
+ * @param mixed $status
+ * @param array $data
+ * @param int $code
+ * @return JsonResponse
+ */
 function status($status, $data = [], $code = 200)
 {
 	return new JsonResponse(
@@ -39,11 +64,25 @@ function status($status, $data = [], $code = 200)
 	);
 }
 
+/**
+ * Return a successful response
+ *
+ * @param array $data
+ * @param int $code
+ * @return JsonResponse
+ */
 function success($data = [], $code = 200)
 {
 	return status(true, $data, $code);
 }
 
+/**
+ * Return a failed response
+ *
+ * @param array $data
+ * @param int $code
+ * @return JsonResponse
+ */
 function fail($data = [], $code = 200)
 {
 	return status(false, $data, $code);
@@ -91,8 +130,11 @@ function user_ip()
  * @param mixed $ip
  * @return mixed
  */
-function detect_country($ip)
+function detect_country($ip = null)
 {
+	$response	= [];
+	$ip			= $ip ?? user_ip();
+
 	try {
 		if (in_array($ip, ['127.0.0.1', '192.168.0.1'])) throw new Exception;
 		$response = json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip={$ip}"), true);
@@ -113,16 +155,24 @@ function detect_country($ip)
 }
 #endregion
 
+/**
+ * Get the page limit from the request\
+ *
+ * @param int $limit
+ * @return mixed
+ */
 function get_page_limit($limit = 20)
 {
 	return request()->get('limit', $limit);
 }
 
-
 /**
  * Get localization
  *
  * @param mixed $path
+ * @param array $replace
+ * @param mixed $locale
+ * @param mixed $fallback
  * @return mixed
  */
 function ___($path, $replace = [], $locale = null, $fallback = null)
@@ -216,7 +266,6 @@ function process_user_device(User $user = null, Request $request = null, bool $d
 	return null;
 }
 
-
 /**
  * Convert seconds to human readable format
  *
@@ -293,4 +342,47 @@ function calculate_discounted_price($price, $discount)
 	}
 
 	return $price;
+}
+
+/**
+ * Round a price to 2 decimal places
+ *
+ * @param mixed $price
+ * @return float
+ */
+function round_price($price, $decimals = 2)
+{
+	return round($price, $decimals);
+}
+
+
+/**
+ * Call an event without throwing an exception
+ *
+ * @param mixed $args
+ * @return void
+ */
+function safe_event(...$args)
+{
+	try {
+		event(...$args);
+	} catch (\Throwable $th) {
+		report($th);
+		//
+	}
+}
+
+/**
+ * Call a job without throwing an exception
+ *
+ * @param mixed $args
+ * @return void
+ */
+function safe_dispatch(...$args)
+{
+	try {
+		dispatch(...$args);
+	} catch (\Throwable $th) {
+		report($th);
+	}
 }

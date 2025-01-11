@@ -57,9 +57,13 @@ class Handler extends ExceptionHandler
 			case $exception instanceof ValidationException:
 				/** @var ValidationException */
 				$exception = $exception;
-				return fail([
-					'errors'	=> $exception->errors(),
-				], Response::HTTP_UNPROCESSABLE_ENTITY);
+				if (request()->wantsJson()) {
+					return fail([
+						'errors'	=> $exception->errors(),
+					], Response::HTTP_UNPROCESSABLE_ENTITY);
+				} else {
+					return redirect()->back()->withInput()->withErrors($exception->errors());
+				}
 
 			case $exception instanceof UnauthorizedException:
 				return fail([
@@ -75,6 +79,11 @@ class Handler extends ExceptionHandler
 				return fail([
 					'message'	=> 'Method not allowed',
 				], Response::HTTP_METHOD_NOT_ALLOWED);
+
+			case $exception instanceof AccessDeniedHttpException:
+				return fail([
+					'message'	=> 'Access denied',
+				], Response::HTTP_FORBIDDEN);
 
 				// case $exception instanceof QueryException:
 				// 	/** @var QueryException */

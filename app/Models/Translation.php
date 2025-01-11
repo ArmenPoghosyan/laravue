@@ -43,7 +43,7 @@ class Translation extends Model
 	 * @param string $language
 	 * @return Builder
 	 */
-	public static function get_value($label, $class, $id = null, $language = 'en',)
+	public static function get_value($label, $class, $id = null, $language = null, array $language_order = [])
 	{
 		$query = static::query()->select('value');
 
@@ -61,6 +61,10 @@ class Translation extends Model
 
 		if ($language) {
 			$query->where('language', $language);
+		}
+
+		if (count($language_order)) {
+			$query->orderByRaw("FIELD(language, '" . implode("','", $language_order) . "')");
 		}
 
 		return $query->where('label', $label)->limit(1);
