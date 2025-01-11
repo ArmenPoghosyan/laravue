@@ -14,22 +14,22 @@
 		"VsCodeTaskButtons.tasks": [
 			{
 				"label": "$(mail) SMTP",
-				"task": "smtp",
+				"task": "SMTP",
 				"tooltip": "Start SMTP server"
 			},
 			{
 				"label": "$(trash) Clean",
-				"task": "clean",
+				"task": "Clean",
 				"tooltip": "Clean all"
 			},
 			{
 				"label": "$(settings-gear) Build",
-				"task": "build",
+				"task": "Build",
 				"tooltip": "Build quasar project"
 			},
 			{
 				"label": "$(vm-running) Run",
-				"task": "run",
+				"task": "Run",
 				"tooltip": "Run Development server"
 			}
 		],
